@@ -48,9 +48,15 @@ app.post('/', function(req, res) {
   var titleSubmitted = req.body && req.body.title && req.body.title.trim();
   if(titleSubmitted) {
     // TODO: Don't add duplicate titles
-    booklist.push({
-      title: req.body.title
-    });
+    var exists = false;
+    for(var prop in booklist){
+      if(booklist[prop].title === titleSubmitted)
+        exists = true;
+    }
+    if(!exists)
+      booklist.push({
+        title: req.body.title
+      });
   }
 
   res.render('index', {
